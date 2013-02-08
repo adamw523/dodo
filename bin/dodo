@@ -36,7 +36,8 @@ except ImportError:
     import dodo
 
 OUTPUT_COLUMNS = {  'regions':  [['id', 5], ['name', 30]],
-                    'sizes':    [['id', 5], ['size', 30]]
+                    'sizes':    [['id', 5], ['size', 30]],
+                    'images':   [['id', 5], ['distribution', 20], ['name', 30]]
         }
 
 def usage():
@@ -73,21 +74,23 @@ def print_list(list_type, items):
 ########################################
 # Commands
 
-def droplets():
+def droplets(opts):
     pass
 
-def images():
-    pass
+def images(opts):
+    conn = dodo.connect()
+    images = conn.images()
+    print_list('images', images)
 
-def regions():
+def regions(opts):
     conn = dodo.connect()
     regions = conn.regions()
     print_list('regions', regions)
 
-def ssh_keys():
+def ssh_keys(opts):
     pass
 
-def sizes():
+def sizes(opts):
     conn = dodo.connect()
     regions = conn.sizes()
     print_list('regions', regions)
@@ -97,17 +100,22 @@ def sizes():
 
 def main():
     try:
+        options = ['droplet_id=', 'filter=', 'image_id', 'name=', 'region_id',
+                    'size_id', 'ssh_key_ids', 'ssh_key_pub']
         command = sys.argv[1]
-        opts, args = getopt.getopt(sys.argv[2:], "hg:d", ["help", "grammar="]) 
-    except:
+        argv = sys.argv[2:]
+        opts, args = getopt.getopt(argv, '', options)
+        opts = dict(((opt[0][2:], opt[1]) for opt in opts))
+    except Exception as e:
+        print e
         usage()
         sys.exit(2)
 
-    if command == 'droplets': droplets()
-    elif command == 'images': images()
-    elif command == 'regions': regions()
-    elif command == 'ssh_keys': ssh_keys()
-    elif command == 'sizes': sizes()
+    if command == 'droplets': droplets(opts)
+    elif command == 'images': images(opts)
+    elif command == 'regions': regions(opts)
+    elif command == 'ssh_keys': ssh_keys(opts)
+    elif command == 'sizes': sizes(opts)
     else: usage()
 
 if __name__ == "__main__":
