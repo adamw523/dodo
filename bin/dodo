@@ -1,0 +1,94 @@
+#!/usr/bin/env python
+
+import getopt
+import inspect
+import os
+import sys
+
+try:
+    import dodo
+except ImportError:
+    # Add to path if running during development
+    filename = inspect.getframeinfo(inspect.currentframe()).filename
+    path = os.path.join(os.path.dirname( os.path.abspath(filename) ), '../')
+    sys.path.append(path)
+    import dodo
+
+OUTPUT_COLUMNS = {  'regions':  [['id', 5], ['name', 30]],
+                    'sizes':    [['id', 5], ['size', 30]]
+        }
+
+def usage():
+    u = """
+usage here
+line two
+"""
+    print u
+
+def print_list(list_type, items):
+    columns = OUTPUT_COLUMNS[list_type]
+    row_len = sum([c[1] + 1 for c in columns])
+
+    # print column headers
+    for column in columns:
+        print column[0][:column[1]].ljust(column[1]),
+    print
+
+    # print divider
+    print '-' * row_len
+
+    # print list items
+    for row in items:
+        for column in columns:
+            # print row, column[0]
+            value = str(row[column[0]])
+            print value[:column[1] - 1].ljust(column[1]),
+
+        print
+
+
+
+
+########################################
+# Commands
+
+def droplets():
+    pass
+
+def images():
+    pass
+
+def regions():
+    conn = dodo.connect()
+    regions = conn.regions()
+    print_list('regions', regions)
+
+def ssh_keys():
+    pass
+
+def sizes():
+    conn = dodo.connect()
+    regions = conn.sizes()
+    print_list('regions', regions)
+
+########################################
+# main
+
+def main():
+    try:
+        command = sys.argv[1]
+        opts, args = getopt.getopt(sys.argv[2:], "hg:d", ["help", "grammar="]) 
+    except:
+        usage()
+        sys.exit(2)
+
+    if command == 'droplets': droplets()
+    elif command == 'images': images()
+    elif command == 'regions': regions()
+    elif command == 'ssh_keys': ssh_keys()
+    elif command == 'sizes': sizes()
+    else: usage()
+
+if __name__ == "__main__":
+    main()
+
