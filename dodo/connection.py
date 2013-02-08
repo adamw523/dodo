@@ -49,6 +49,7 @@ class Connection:
 
         url = self.host + '/' + path
         r = requests.get(url, params=params)
+
         return r
 
     def get_json(self, path, params={}, path_params={}):
@@ -64,10 +65,11 @@ class Connection:
         res = self.get_json(path)
         return res['droplets']
 
-    def new_droplet(self, size_id, image_id, region_id, ssh_key_ids):
+    def new_droplet(self, name, size_id, image_id, region_id, ssh_key_ids):
         path = 'droplets/new'
-        res = self.get_json(path)
-        return res['droplets']
+        res = self.get_json(path, {'size_id': size_id, 'image_id': image_id,
+            'region_id': region_id, 'ssh_key_ids': ssh_key_ids, 'name': name})
+        return res
 
     # Images
     def images(self, ifilter=None):

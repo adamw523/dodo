@@ -37,7 +37,11 @@ except ImportError:
 
 OUTPUT_COLUMNS = {  'regions':  [['id', 5], ['name', 30]],
                     'sizes':    [['id', 5], ['size', 30]],
-                    'images':   [['id', 5], ['distribution', 20], ['name', 30]]
+                    'images':   [['id', 8], ['distribution', 20], ['name', 30]],
+                    'ssh_keys': [['id', 5], ['name', 40]],
+                    'droplets': [['id', 5], ['name', 40], ['image_id', 5],
+                                 ['region_id', 6], ['size_id', 4], ['status', 10],
+                                 ['backups_active', 7]]
         }
 
 def usage():
@@ -75,11 +79,25 @@ def print_list(list_type, items):
 # Commands
 
 def droplets(opts):
-    pass
+    conn = dodo.connect()
+    if 'new' in opts:
+        if 'ssh_key_ids' in opts:
+            ssh_key_ids = opts['ssh_key_ids']
+        else:
+            ssh_key_ids = None
+
+        droplet = conn.new_droplet(opts['name'], opts['size_id'],
+                opts['image_id'],
+                opts['region_id'], ssh_key_ids)
+
+        print droplet
+    else:
+        droplets = conn.droplets()
+        print_list('droplets', droplets)
 
 def images(opts):
     conn = dodo.connect()
-    if opts['filter']:
+    if 'filter' in opts:
         images = conn.images(opts['filter'])
     else:
         images = conn.images()
@@ -91,7 +109,9 @@ def regions(opts):
     print_list('regions', regions)
 
 def ssh_keys(opts):
-    pass
+    conn = dodo.connect()
+    ssh_keys = conn.ssh_keys()
+    print_list('ssh_keys', ssh_keys)
 
 def sizes(opts):
     conn = dodo.connect()
@@ -103,8 +123,8 @@ def sizes(opts):
 
 def main():
     try:
-        options = ['droplet_id=', 'filter=', 'image_id', 'name=', 'region_id',
-                    'size_id', 'ssh_key_ids', 'ssh_key_pub']
+        options = ['droplet_id=', 'filter=', 'image_id=', 'name=', 'region_id=',
+                    'size_id=', 'ssh_key_ids=', 'ssh_key_pub=', 'new']
         command = sys.argv[1]
         argv = sys.argv[2:]
         opts, args = getopt.getopt(argv, '', options)
