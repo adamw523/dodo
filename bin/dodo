@@ -79,7 +79,10 @@ def droplets(opts):
 
 def images(opts):
     conn = dodo.connect()
-    images = conn.images()
+    if opts['filter']:
+        images = conn.images(opts['filter'])
+    else:
+        images = conn.images()
     print_list('images', images)
 
 def regions(opts):
