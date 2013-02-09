@@ -71,6 +71,11 @@ class Connection:
             'region_id': region_id, 'ssh_key_ids': ssh_key_ids, 'name': name})
         return res
 
+    def destroy_droplet(self, droplet_id):
+        path = 'droplets/%(droplet_id)s/destroy'
+        res = self.get_json(path, {}, {'droplet_id': droplet_id})
+        return res
+
     # Images
     def images(self, ifilter=None):
         path = 'images/'

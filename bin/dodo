@@ -39,7 +39,7 @@ OUTPUT_COLUMNS = {  'regions':  [['id', 5], ['name', 30]],
                     'sizes':    [['id', 5], ['size', 30]],
                     'images':   [['id', 8], ['distribution', 20], ['name', 30]],
                     'ssh_keys': [['id', 5], ['name', 40]],
-                    'droplets': [['id', 5], ['name', 40], ['image_id', 5],
+                    'droplets': [['id', 9], ['name', 40], ['image_id', 5],
                                  ['region_id', 6], ['size_id', 4], ['status', 10],
                                  ['backups_active', 7]]
         }
@@ -81,6 +81,7 @@ def print_list(list_type, items):
 def droplets(opts):
     conn = dodo.connect()
     if 'new' in opts:
+        # creating a new droplet
         if 'ssh_key_ids' in opts:
             ssh_key_ids = opts['ssh_key_ids']
         else:
@@ -91,6 +92,12 @@ def droplets(opts):
                 opts['region_id'], ssh_key_ids)
 
         print droplet
+
+    elif 'destroy' in opts:
+        # destroying a droplet
+        res = conn.destroy_droplet(opts['droplet_id'])
+        print res
+
     else:
         droplets = conn.droplets()
         print_list('droplets', droplets)
@@ -124,7 +131,8 @@ def sizes(opts):
 def main():
     try:
         options = ['droplet_id=', 'filter=', 'image_id=', 'name=', 'region_id=',
-                    'size_id=', 'ssh_key_ids=', 'ssh_key_pub=', 'new']
+                    'size_id=', 'ssh_key_ids=', 'ssh_key_pub=', 'new',
+                    'destroy']
         command = sys.argv[1]
         argv = sys.argv[2:]
         opts, args = getopt.getopt(argv, '', options)
