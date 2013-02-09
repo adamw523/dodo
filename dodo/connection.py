@@ -155,6 +155,16 @@ class Connection:
             res = self.get_json(path)
         return res['images']
 
+    def destroy_image(self, image_id):
+        path = 'images/%(image_id)s/destroy'
+        res = self.get_json(path, {}, {'image_id': image_id})
+        return res
+
+    def show_image(self, image_id):
+        path = 'images/%(image_id)s'
+        res = self.get_json(path, {}, {'image_id': image_id})
+        return res['image']
+
     # Regions
     def regions(self):
         path = 'regions/'
@@ -178,6 +188,12 @@ class Connection:
         res = self.get_json(path, {}, {'ssh_key_id': ssh_key_id})
         #if res['ssh_key
         return res['ssh_key']
+
+    # TODO: add not implemented yet
+    def edit_ssh_key(self, ssh_key_name, ssh_key_pub):
+        path = 'ssh_key/%(ssh_key_id)/edit/'
+        res = self.get_json(path, {'ssh_key_pub': ssh_key_pub})
+        return res
 
     # TODO: add not implemented yet
     def add_ssh_key(self, ssh_key_name, ssh_key_pub):

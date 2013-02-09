@@ -167,11 +167,21 @@ def droplets(opts):
 
 def images(opts):
     conn = dodo.connect()
-    if 'filter' in opts:
-        images = conn.images(opts['filter'])
+
+    if 'destroy' in opts:
+        res = conn.destroy_image(opts['image_id'])
+        print_dict(res)
+
+    elif 'show' in opts:
+        image = conn.show_image(opts['image_id'])
+        print_dict(image)
+
     else:
-        images = conn.images()
-    print_list('images', images)
+        if 'filter' in opts:
+            images = conn.images(opts['filter'])
+        else:
+            images = conn.images()
+        print_list('images', images)
 
 def regions(opts):
     conn = dodo.connect()
@@ -180,8 +190,12 @@ def regions(opts):
 
 def ssh_keys(opts):
     conn = dodo.connect()
-    ssh_keys = conn.ssh_keys()
-    print_list('ssh_keys', ssh_keys)
+    if 'show' in opts:
+        ssh_key = conn.ssh_key(opts['ssh_key_id'])
+        print_dict(ssh_key)
+    else:
+        ssh_keys = conn.ssh_keys()
+        print_list('ssh_keys', ssh_keys)
 
 def sizes(opts):
     conn = dodo.connect()
@@ -198,7 +212,7 @@ def main():
                     'destroy', 'show', 'reboot', 'power_cycle', 'shutdown',
                     'power_off', 'power_on', 'reset_root_password', 'resize',
                     'snapshot', 'restore', 'rebuild', 'enable_backups',
-                    'disable_backups']
+                    'disable_backups', 'ssh_key_id=']
         command = sys.argv[1]
         argv = sys.argv[2:]
         opts, args = getopt.getopt(argv, '', options)
