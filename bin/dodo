@@ -52,6 +52,10 @@ line two
     print u
 
 def print_list(list_type, items):
+    """
+    Print out a list of dict in a table format. The formats are defined
+    in OUTPUT_COLUMNS and specified with the list_type parameter.
+    """
     columns = OUTPUT_COLUMNS[list_type]
     row_len = sum([c[1] + 1 for c in columns])
 
@@ -72,7 +76,14 @@ def print_list(list_type, items):
 
         print
 
-
+def print_dict(out_dict):
+    """
+    Print out a dict in 2 column format
+    """
+    for k in out_dict:
+        print k[:15].ljust(15),
+        print ': ',
+        print out_dict[k]
 
 
 ########################################
@@ -96,7 +107,12 @@ def droplets(opts):
     elif 'destroy' in opts:
         # destroying a droplet
         res = conn.destroy_droplet(opts['droplet_id'])
-        print res
+        print_dict(res)
+
+    elif 'show' in opts:
+        # showing a droplet
+        res = conn.show_droplet(opts['droplet_id'])
+        print_dict(res)
 
     else:
         droplets = conn.droplets()
@@ -132,7 +148,7 @@ def main():
     try:
         options = ['droplet_id=', 'filter=', 'image_id=', 'name=', 'region_id=',
                     'size_id=', 'ssh_key_ids=', 'ssh_key_pub=', 'new',
-                    'destroy']
+                    'destroy', 'show']
         command = sys.argv[1]
         argv = sys.argv[2:]
         opts, args = getopt.getopt(argv, '', options)

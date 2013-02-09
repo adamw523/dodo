@@ -76,6 +76,11 @@ class Connection:
         res = self.get_json(path, {}, {'droplet_id': droplet_id})
         return res
 
+    def show_droplet(self, droplet_id):
+        path = 'droplets/%(droplet_id)s'
+        res = self.get_json(path, {}, {'droplet_id': droplet_id})
+        return res['droplet']
+
     # Images
     def images(self, ifilter=None):
         path = 'images/'
