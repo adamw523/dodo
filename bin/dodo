@@ -102,16 +102,63 @@ def droplets(opts):
                 opts['image_id'],
                 opts['region_id'], ssh_key_ids)
 
-        print droplet
+        print_dict(droplet)
 
     elif 'destroy' in opts:
-        # destroying a droplet
         res = conn.destroy_droplet(opts['droplet_id'])
         print_dict(res)
 
+    elif 'disable_backups' in opts:
+        res = conn.disable_backups_droplet(opts['droplet_id'])
+        print_dict(res)
+
+    elif 'enable_backups' in opts:
+        res = conn.enable_backups_droplet(opts['droplet_id'])
+        print_dict(res)
+
+    elif 'power_cycle' in opts:
+        res = conn.power_cycle_droplet(opts['droplet_id'])
+        print_dict(res)
+
+    elif 'power_off' in opts:
+        res = conn.power_off_droplet(opts['droplet_id'])
+        print_dict(res)
+
+    elif 'power_on' in opts:
+        res = conn.power_on_droplet(opts['droplet_id'])
+        print_dict(res)
+
+    elif 'reboot' in opts:
+        res = conn.reboot_droplet(opts['droplet_id'])
+        print_dict(res)
+
+    elif 'reset_root_password' in opts:
+        res = conn.reset_root_password_droplet(opts['droplet_id'])
+        print_dict(res)
+
+    elif 'rebuild' in opts:
+        res = conn.rebuild_droplet(opts['droplet_id'], opts['image_id'])
+        print_dict(res)
+
+    elif 'resize' in opts:
+        res = conn.resize_droplet(opts['droplet_id'], opts['size_id'])
+        print_dict(res)
+
+    elif 'restore' in opts:
+        res = conn.restore_droplet(opts['droplet_id'], opts['image_id'])
+        print_dict(res)
+
     elif 'show' in opts:
-        # showing a droplet
         res = conn.show_droplet(opts['droplet_id'])
+        print_dict(res)
+
+    elif 'snapshot' in opts:
+        name = opts.get('name', None)
+        res = conn.snapshot_droplet(opts['droplet_id'], name)
+        print_dict(res)
+
+    elif 'shutdown' in opts:
+        res = conn.shutdown_droplet(opts['droplet_id'])
         print_dict(res)
 
     else:
@@ -148,7 +195,10 @@ def main():
     try:
         options = ['droplet_id=', 'filter=', 'image_id=', 'name=', 'region_id=',
                     'size_id=', 'ssh_key_ids=', 'ssh_key_pub=', 'new',
-                    'destroy', 'show']
+                    'destroy', 'show', 'reboot', 'power_cycle', 'shutdown',
+                    'power_off', 'power_on', 'reset_root_password', 'resize',
+                    'snapshot', 'restore', 'rebuild', 'enable_backups',
+                    'disable_backups']
         command = sys.argv[1]
         argv = sys.argv[2:]
         opts, args = getopt.getopt(argv, '', options)
@@ -167,4 +217,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

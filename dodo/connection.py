@@ -69,17 +69,82 @@ class Connection:
         path = 'droplets/new'
         res = self.get_json(path, {'size_id': size_id, 'image_id': image_id,
             'region_id': region_id, 'ssh_key_ids': ssh_key_ids, 'name': name})
-        return res
+        return res['droplet']
 
     def destroy_droplet(self, droplet_id):
         path = 'droplets/%(droplet_id)s/destroy'
         res = self.get_json(path, {}, {'droplet_id': droplet_id})
         return res
 
+    def disable_backups_droplet(self, droplet_id):
+        path = 'droplets/%(droplet_id)s/disable_backups'
+        res = self.get_json(path, {}, {'droplet_id': droplet_id})
+        return res
+
+    def enable_backups_droplet(self, droplet_id):
+        path = 'droplets/%(droplet_id)s/enable_backups'
+        res = self.get_json(path, {}, {'droplet_id': droplet_id})
+        return res
+
+    def power_off_droplet(self, droplet_id):
+        path = 'droplets/%(droplet_id)s/power_off'
+        res = self.get_json(path, {}, {'droplet_id': droplet_id})
+        return res
+
+    def power_on_droplet(self, droplet_id):
+        path = 'droplets/%(droplet_id)s/power_on'
+        res = self.get_json(path, {}, {'droplet_id': droplet_id})
+        return res
+
+    def power_cycle_droplet(self, droplet_id):
+        path = 'droplets/%(droplet_id)s/power_cycle'
+        res = self.get_json(path, {}, {'droplet_id': droplet_id})
+        return res
+
+    def reboot_droplet(self, droplet_id):
+        path = 'droplets/%(droplet_id)s/reboot'
+        res = self.get_json(path, {}, {'droplet_id': droplet_id})
+        return res
+
+    def reset_root_password_droplet(self, droplet_id):
+        path = 'droplets/%(droplet_id)s/reset_root_password'
+        res = self.get_json(path, {}, {'droplet_id': droplet_id})
+        return res
+
+    def resize_droplet(self, droplet_id, size_id):
+        path = 'droplets/%(droplet_id)s/resize'
+        res = self.get_json(path, {'size_id': size_id},
+                {'droplet_id': droplet_id})
+        return res
+
+    def rebuild_droplet(self, droplet_id, image_id):
+        path = 'droplets/%(droplet_id)s/rebuild'
+        res = self.get_json(path, {'image_id': image_id},
+                {'droplet_id': droplet_id})
+        return res
+
+    def restore_droplet(self, droplet_id, image_id):
+        path = 'droplets/%(droplet_id)s/restore'
+        res = self.get_json(path, {'image_id': image_id},
+                {'droplet_id': droplet_id})
+        return res
+
+    def snapshot_droplet(self, droplet_id, name=None):
+        path = 'droplets/%(droplet_id)s/snapshot'
+        params = {}
+        if name: params['name'] = name
+        res = self.get_json(path, params, {'droplet_id': droplet_id})
+        return res
+
     def show_droplet(self, droplet_id):
         path = 'droplets/%(droplet_id)s'
         res = self.get_json(path, {}, {'droplet_id': droplet_id})
         return res['droplet']
+
+    def shutdown_droplet(self, droplet_id):
+        path = 'droplets/%(droplet_id)s/shutdown'
+        res = self.get_json(path, {}, {'droplet_id': droplet_id})
+        return res
 
     # Images
     def images(self, ifilter=None):
