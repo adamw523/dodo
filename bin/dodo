@@ -26,14 +26,7 @@ import inspect
 import os
 import sys
 
-try:
-    import dodo
-except ImportError:
-    # Add to path if running during development
-    filename = inspect.getframeinfo(inspect.currentframe()).filename
-    path = os.path.join(os.path.dirname( os.path.abspath(filename) ), '../')
-    sys.path.append(path)
-    import dodo
+import dodo
 
 OUTPUT_COLUMNS = {  'regions':  [['id', 5], ['name', 30]],
                     'sizes':    [['id', 5], ['size', 30]],
