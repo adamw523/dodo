@@ -33,6 +33,7 @@ setup(  name='dodo',
         licence='MIT',
         install_requires=['requests'],
         packages=['dodo'],
+        include_package_data=True,
         scripts=['bin/dodo']
     )
 

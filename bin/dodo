@@ -255,12 +255,21 @@ def main():
         usage()
         sys.exit(2)
 
-    if resource == 'droplets': droplets(opts)
-    elif resource == 'images': images(opts)
-    elif resource == 'regions': regions(opts)
-    elif resource == 'ssh_keys': ssh_keys(opts)
-    elif resource == 'sizes': sizes(opts)
-    else: usage()
+    if not hasattr(dodo.config, 'client_id'):
+        print 'ERROR: dodo configuration not found. Run `dodo --help` for ',
+        print 'more info.'
+        print
+        sys.exit(2)
+    else:
+        try:
+            if resource == 'droplets': droplets(opts)
+            elif resource == 'images': images(opts)
+            elif resource == 'regions': regions(opts)
+            elif resource == 'ssh_keys': ssh_keys(opts)
+            elif resource == 'sizes': sizes(opts)
+            else: usage()
+        except KeyError as e:
+            print "Cannot find value: " + str(e)
 
 if __name__ == "__main__":
     main()

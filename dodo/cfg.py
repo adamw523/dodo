@@ -29,14 +29,17 @@ class Config:
         # get the paths that we might want to use
         paths = [os.path.expanduser('~/.dodo')]
 
-        # get parser
-        self.parser = SafeConfigParser()
-        self.parser.read(paths)
+        if os.path.exists(paths[0]):
+            # get parser
+            self.parser = SafeConfigParser()
+            self.parser.read(paths)
 
-        # set config options
-        self.host = host
-        self.client_id = self.parser.get('credentials', 'client')
-        self.api_key = self.parser.get('credentials', 'api')
+            # set config options
+            self.host = host
+            self.client_id = self.parser.get('credentials', 'client')
+            self.api_key = self.parser.get('credentials', 'api')
+        else:
+            pass
 
 
 

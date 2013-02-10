@@ -20,8 +20,9 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import dodo
 import requests
+
+import dodo
 
 class Connection:
     def __init__(self, host=None, client_id=None, api_key=None):
