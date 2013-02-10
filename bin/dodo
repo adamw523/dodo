@@ -44,12 +44,55 @@ OUTPUT_COLUMNS = {  'regions':  [['id', 5], ['name', 30]],
                                  ['backups_active', 7]]
         }
 
+OPTIONS = ['droplet_id=', 'filter=', 'image_id=', 'name=', 'region_id=',
+            'size_id=', 'ssh_key_ids=', 'ssh_key_pub=', 'new',
+            'destroy', 'show', 'reboot', 'power_cycle', 'shutdown',
+            'power_off', 'power_on', 'reset_root_password', 'resize',
+            'snapshot', 'restore', 'rebuild', 'enable_backups',
+            'disable_backups', 'ssh_key_id=', 'help']
+
+def usage_options(lead=18):
+    out = ''
+    o = ['[--' + o.translate(None, '=') + ']' for o in sorted(OPTIONS)]
+    for i in xrange(0, len(o), 4):
+        if i > 0: out += ' ' * lead
+        out += ' '.join(o[i:i + 4])
+        out += '\n'
+    return out
+
 def usage():
-    u = """
-usage here
-line two
-"""
-    print u
+    out = 'Usage: dodo resource '
+    out += usage_options(lead=21)
+    print out
+
+def usage_long():
+    out = '''NAME
+    dodo - A DigitalOcean command line interface
+
+SYNOPSIS
+    dodo resource '''
+
+    out += usage_options()
+
+    out += '''OPTIONS
+    resource
+        droplets, images, regions, sizes, ssh_keys
+
+    --filter
+        my_images, global
+
+FILES
+    ~/.dodo
+        Credentials configuration file:
+
+        Example:
+
+        [crednetials]
+        client=<client_key>
+        api=<api_key>
+    '''
+
+    print out
 
 def print_list(list_type, items):
     """
@@ -206,27 +249,24 @@ def sizes(opts):
 # main
 
 def main():
+    if len(sys.argv) == 2 and sys.argv[1] == '--help':
+        usage_long()
+        sys.exit()
+
     try:
-        options = ['droplet_id=', 'filter=', 'image_id=', 'name=', 'region_id=',
-                    'size_id=', 'ssh_key_ids=', 'ssh_key_pub=', 'new',
-                    'destroy', 'show', 'reboot', 'power_cycle', 'shutdown',
-                    'power_off', 'power_on', 'reset_root_password', 'resize',
-                    'snapshot', 'restore', 'rebuild', 'enable_backups',
-                    'disable_backups', 'ssh_key_id=']
-        command = sys.argv[1]
+        resource = sys.argv[1]
         argv = sys.argv[2:]
-        opts, args = getopt.getopt(argv, '', options)
+        opts, args = getopt.getopt(argv, '', OPTIONS)
         opts = dict(((opt[0][2:], opt[1]) for opt in opts))
     except Exception as e:
-        print e
         usage()
         sys.exit(2)
 
-    if command == 'droplets': droplets(opts)
-    elif command == 'images': images(opts)
-    elif command == 'regions': regions(opts)
-    elif command == 'ssh_keys': ssh_keys(opts)
-    elif command == 'sizes': sizes(opts)
+    if resource == 'droplets': droplets(opts)
+    elif resource == 'images': images(opts)
+    elif resource == 'regions': regions(opts)
+    elif resource == 'ssh_keys': ssh_keys(opts)
+    elif resource == 'sizes': sizes(opts)
     else: usage()
 
 if __name__ == "__main__":
