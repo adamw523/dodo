@@ -23,14 +23,14 @@
 
 from setuptools import setup
 
-version = '0.1'
+version = '0.1.1'
 
 setup(  name='dodo',
         version=version,
         description='DigitalOcean Library and Command Line tools',
         author='Adam Wisniewski',
         author_email='adamw@tbcn.ca',
-        licence='MIT',
+        license='MIT',
         install_requires=['requests'],
         packages=['dodo'],
         include_package_data=True,
