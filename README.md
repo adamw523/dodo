@@ -1,8 +1,16 @@
 # dodo - DigitalOcean Library and Command Line tools
 
+[![dodo](http://adamw523.s3.amazonaws.com/dodo/dodo.png)](http://commons.wikimedia.org/wiki/File:Dodo_head_\(1848\).jpg)
+
 ## Installation
 ```
 pip install dodo
+```
+
+or
+
+```
+easy_install dodo
 ```
 
 ## Configuration File
