@@ -31,7 +31,7 @@ setup(  name='dodo',
         author='Adam Wisniewski',
         author_email='adamw@tbcn.ca',
         license='MIT',
-        install_requires=['requests'],
+        install_requires=['requests >= 1.1.0'],
         packages=['dodo'],
         include_package_data=True,
         scripts=['bin/dodo']
