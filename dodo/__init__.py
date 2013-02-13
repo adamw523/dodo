@@ -22,6 +22,9 @@
 
 import dodo.cfg
 
+VERSION = '0.1.2'
+USER_AGENT = 'dodo/%s' % (VERSION)
+
 config = dodo.cfg.Config()
 
 def connect(host=None, client_id=None, api_key=None):

@@ -22,8 +22,9 @@
 
 
 from setuptools import setup
+import dodo
 
-version = '0.1.1'
+version = dodo.VERSION
 
 setup(  name='dodo',
         version=version,

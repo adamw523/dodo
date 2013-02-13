@@ -49,7 +49,11 @@ class Connection:
         params = self.build_params(params)
 
         url = self.host + '/' + path
-        r = requests.get(url, params=params)
+
+        headers = {}
+        headers['User-Agent'] = dodo.USER_AGENT
+
+        r = requests.get(url, params=params, headers=headers)
 
         return r
 
