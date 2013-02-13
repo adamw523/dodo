@@ -34,6 +34,14 @@ setup(  name='dodo',
         install_requires=['requests >= 1.1.0'],
         packages=['dodo'],
         include_package_data=True,
-        scripts=['bin/dodo']
+        scripts=['bin/dodo'],
+        classifiers=[
+            "Development Status :: 4 - Beta",
+            "Environment :: Console",
+            "Intended Audience :: Information Technology",
+            "License :: OSI Approved :: MIT License",
+            "Topic :: Software Development :: Libraries :: Python Modules",
+            "Topic :: Utilities"
+        ]
     )
 
