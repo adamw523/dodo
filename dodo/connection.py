@@ -24,6 +24,9 @@ import requests
 
 import dodo
 
+class DodoError(Exception):
+    pass
+
 class Connection:
     def __init__(self, host=None, client_id=None, api_key=None):
         config = dodo.config
@@ -59,7 +62,12 @@ class Connection:
 
     def get_json(self, path, params={}, path_params={}):
         r = self.get(path, params, path_params)
-        return r.json()
+        j = r.json()
+
+        if j['status'] == 'ERROR':
+            raise DodoError(j['error_message'])
+
+        return j
 
     ##############################
     # API Calls
@@ -74,6 +82,7 @@ class Connection:
         path = 'droplets/new'
         res = self.get_json(path, {'size_id': size_id, 'image_id': image_id,
             'region_id': region_id, 'ssh_key_ids': ssh_key_ids, 'name': name})
+        print res
         return res['droplet']
 
     def destroy_droplet(self, droplet_id):
