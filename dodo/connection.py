@@ -82,7 +82,6 @@ class Connection:
         path = 'droplets/new'
         res = self.get_json(path, {'size_id': size_id, 'image_id': image_id,
             'region_id': region_id, 'ssh_key_ids': ssh_key_ids, 'name': name})
-        print res
         return res['droplet']
 
     def destroy_droplet(self, droplet_id):
