@@ -105,6 +105,31 @@ FILES
 ## Example Cration of new Droplet
 ![Creating a new Droplet](http://adamw523.s3.amazonaws.com/dodo/dodo_v1.gif)
 
+## Development
+
+### Setting Up Envirnment
+
+```
+$ git clone git@github.com:adamw523/dodo.git
+$ cd dodo
+$ virtualenv ~/dodove
+$ . ~/dodove/bin/activate
+```
+
+###
+
+Building And Uploading to PyPi
+
+```
+$ python setup.py sdist upload
+```
+
+If not registered on local machine yet:
+
+```
+$ python setup.py sdist register upload
+```
+
 ## License
 
 MIT
