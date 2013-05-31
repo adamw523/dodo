@@ -22,7 +22,7 @@
 
 import dodo.cfg
 
-VERSION = '0.1.2'
+VERSION = '0.1.3'
 USER_AGENT = 'dodo/%s' % (VERSION)
 
 config = dodo.cfg.Config()
