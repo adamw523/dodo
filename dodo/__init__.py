@@ -20,14 +20,21 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+
+"""
+Library and Command Line tools for interfacing with
+DigitalOcean (Virtual Host Provider)
+"""
+
 import dodo.cfg
 
-VERSION = '0.1.3'
+VERSION = '0.1.4'
 USER_AGENT = 'dodo/%s' % (VERSION)
 
 config = dodo.cfg.Config()
 
 def connect(host=None, client_id=None, api_key=None):
+    """Instantiate a Connection to DigitalOcean"""
     from dodo.connection import Connection
     return Connection(host, client_id, api_key)
 
