@@ -42,7 +42,7 @@ OPTIONS = ['droplet_id=', 'filter=', 'image_id=', 'name=', 'region_id=',
             'destroy', 'show', 'reboot', 'power_cycle', 'shutdown',
             'power_off', 'power_on', 'reset_root_password', 'resize',
             'snapshot', 'restore', 'rebuild', 'enable_backups',
-            'disable_backups', 'ssh_key_id=', 'help']
+            'disable_backups', 'ssh_key_id=', 'help', 'event_id=']
 
 def usage_options(lead=18):
     out = ''
@@ -238,6 +238,11 @@ def sizes(opts):
     regions = conn.sizes()
     print_list('regions', regions)
 
+def events(opts):
+    conn = dodo.connect()
+    event = conn.show_event(opts['event_id'])
+    print_dict(event)
+
 ########################################
 # main
 
@@ -267,9 +272,10 @@ def main():
             elif resource == 'regions': regions(opts)
             elif resource == 'ssh_keys': ssh_keys(opts)
             elif resource == 'sizes': sizes(opts)
+            elif resource == 'events': events(opts)
             else: usage()
         except KeyError as e:
-            print "Cannot find value: " + str(e)
+            print "Missing option: " + str(e)
 
 if __name__ == "__main__":
     main()

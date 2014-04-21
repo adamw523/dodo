@@ -206,6 +206,12 @@ class Connection:
         #if res['ssh_key
         return res['ssh_key']
 
+    # Events
+    def show_event(self, event_id):
+        path = 'events/%(event_id)s'
+        res = self.get_json(path, {}, {'event_id': event_id})
+        return res['event']
+
     # TODO: add not implemented yet
     def edit_ssh_key(self, ssh_key_name, ssh_key_pub):
         path = 'ssh_key/%(ssh_key_id)/edit/'
