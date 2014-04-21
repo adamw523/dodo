@@ -116,6 +116,11 @@ $ virtualenv ~/dodove
 $ . ~/dodove/bin/activate
 ```
 
+Set up local symlinks for development
+```
+python setup.py develop
+```
+
 ###
 
 Building And Uploading to PyPi
