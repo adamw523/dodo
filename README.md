@@ -135,6 +135,12 @@ If not registered on local machine yet:
 $ python setup.py sdist register upload
 ```
 
+Running tests with file watch
+
+```
+$ nosetests --with-watch
+```
+
 ## License
 
 MIT
