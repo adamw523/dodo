@@ -210,6 +210,7 @@ class Connection:
     def show_event(self, event_id):
         path = 'events/%(event_id)s'
         res = self.get_json(path, {}, {'event_id': event_id})
+        print res
         return res['event']
 
     # TODO: add not implemented yet
