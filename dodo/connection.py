@@ -226,5 +226,11 @@ class Connection:
             'ssh_key_pub': ssh_key_pub})
         return res
 
+    # Domains
+    def domains(self):
+        path = 'domains/'
+        res = self.get_json(path)
+        return res['domains']
+
 
 
