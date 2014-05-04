@@ -34,7 +34,9 @@ OUTPUT_COLUMNS = {  'regions':  [['id', 5], ['name', 30]],
                     'ssh_keys': [['id', 7], ['name', 40]],
                     'droplets': [['id', 9], ['name', 40], ['image_id', 8],
                                  ['region_id', 6], ['size_id', 4], ['status', 10],
-                                 ['backups_active', 7]]
+                                 ['backups_active', 7]],
+                    'domains': [['id', 9], ['name', 40], ['live_zone_file', 16],
+                                 ['zone_file_with_error', 20]]
         }
 
 OPTIONS = ['droplet_id=', 'filter=', 'image_id=', 'name=', 'region_id=',
@@ -69,7 +71,7 @@ SYNOPSIS
 
     out += '''OPTIONS
     resource
-        droplets, images, regions, sizes, ssh_keys
+        domains, droplets, images, regions, sizes, ssh_keys
 
     --filter
         my_images, global
@@ -243,6 +245,11 @@ def events(opts):
     event = conn.show_event(opts['event_id'])
     print_dict(event)
 
+def domains(opts):
+    conn = dodo.connect()
+    domains = conn.domains()
+    print_list('domains', domains)
+
 ########################################
 # main
 
@@ -273,6 +280,7 @@ def main():
             elif resource == 'ssh_keys': ssh_keys(opts)
             elif resource == 'sizes': sizes(opts)
             elif resource == 'events': events(opts)
+            elif resource == 'domains': domains(opts)
             else: usage()
         except KeyError as e:
             print "Missing option: " + str(e)
