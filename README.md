@@ -96,13 +96,13 @@ FILES
 
         Example:
 
-        [crednetials]
+        [credentials]
         client=<client_key>
         api=<api_key>
 ```
 
 
-## Example Cration of new Droplet
+## Example creation of new Droplet
 ![Creating a new Droplet](http://adamw523.s3.amazonaws.com/dodo/dodo_v1.gif)
 
 ## Development
