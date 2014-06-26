@@ -82,7 +82,7 @@ FILES
 
         Example:
 
-        [crednetials]
+        [credentials]
         client=<client_key>
         api=<api_key>
     '''
