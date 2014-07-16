@@ -82,10 +82,13 @@ class Connection:
         res = self.get_json(path)
         return res['droplets']
 
-    def new_droplet(self, name, size_id, image_id, region_id, ssh_key_ids):
+    def new_droplet(self, name, size_id, image_id, region_id, ssh_key_ids,
+            backups_enabled=False, enable_private_networking=False):
         path = 'droplets/new'
         res = self.get_json(path, {'size_id': size_id, 'image_id': image_id,
-            'region_id': region_id, 'ssh_key_ids': ssh_key_ids, 'name': name})
+            'region_id': region_id, 'ssh_key_ids': ssh_key_ids, 'name': name,
+            'enable_private_networking': enable_private_networking,
+            'backups_enabled': backups_enabled})
         return res['droplet']
 
     def destroy_droplet(self, droplet_id):

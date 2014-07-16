@@ -44,7 +44,8 @@ OPTIONS = ['droplet_id=', 'filter=', 'image_id=', 'name=', 'region_id=',
             'destroy', 'show', 'reboot', 'power_cycle', 'shutdown',
             'power_off', 'power_on', 'reset_root_password', 'resize',
             'snapshot', 'restore', 'rebuild', 'enable_backups',
-            'disable_backups', 'ssh_key_id=', 'help', 'event_id=']
+            'disable_backups', 'ssh_key_id=', 'help', 'event_id=',
+            'enable_private_networking', 'backups_enabled']
 
 def usage_options(lead=18):
     out = ''
@@ -131,14 +132,23 @@ def droplets(opts):
     conn = dodo.connect()
     if 'new' in opts:
         # creating a new droplet
+        ssh_keys = None
+        backups_enabled = 'false'
+        enable_private_networking = 'false'
+
         if 'ssh_key_ids' in opts:
             ssh_key_ids = opts['ssh_key_ids']
-        else:
-            ssh_key_ids = None
+
+        if 'backups_enabled' in opts:
+            backups_enabled = True
+
+        if 'enable_private_networking' in opts:
+            enable_private_networking = True
 
         droplet = conn.new_droplet(opts['name'], opts['size_id'],
                 opts['image_id'],
-                opts['region_id'], ssh_key_ids)
+                opts['region_id'], ssh_key_ids,
+                backups_enabled, enable_private_networking)
 
         print_dict(droplet)
 
